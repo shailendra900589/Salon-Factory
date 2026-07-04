@@ -48,16 +48,35 @@
   }
 
   function pinHub(hub, chatbot) {
-    var right = 'max(10px, env(safe-area-inset-right, 0px))';
-    hub.style.cssText =
-      'position:fixed!important;bottom:max(22px,env(safe-area-inset-bottom,0px))!important;' +
-      'right:' + right + '!important;left:auto!important;top:auto!important;' +
-      'z-index:99999!important;pointer-events:auto!important;margin:0!important;' +
-      'width:auto!important;max-width:none!important;transform:none!important;';
+    var props = [
+      ['position', 'fixed'],
+      ['right', '12px'],
+      ['left', 'auto'],
+      ['bottom', '18px'],
+      ['top', 'auto'],
+      ['width', 'auto'],
+      ['max-width', 'none'],
+      ['margin', '0'],
+      ['padding', '0'],
+      ['transform', 'none'],
+      ['translate', 'none'],
+      ['z-index', '99999']
+    ];
+    props.forEach(function (p) {
+      hub.style.setProperty(p[0], p[1], 'important');
+    });
+
+    var anchor = hub.querySelector('.contact-hub-anchor');
+    if (anchor) {
+      anchor.style.setProperty('display', 'inline-flex', 'important');
+      anchor.style.setProperty('width', 'auto', 'important');
+      anchor.style.setProperty('justify-content', 'flex-end', 'important');
+    }
+
     if (chatbot) {
-      chatbot.style.right = right;
-      chatbot.style.left = 'auto';
-      chatbot.style.zIndex = '99998';
+      chatbot.style.setProperty('right', '12px', 'important');
+      chatbot.style.setProperty('left', 'auto', 'important');
+      chatbot.style.setProperty('z-index', '99998', 'important');
     }
   }
 
@@ -80,6 +99,10 @@
     if (hub.parentElement !== document.body) document.body.appendChild(hub);
     if (chatbot && chatbot.parentElement !== document.body) document.body.appendChild(chatbot);
     pinHub(hub, chatbot);
+
+    function repin() { pinHub(hub, chatbot); }
+    window.addEventListener('resize', repin);
+    window.addEventListener('orientationchange', function () { setTimeout(repin, 120); });
 
     var menuOpen = false;
     var chatOpen = false;
