@@ -1315,6 +1315,7 @@
     if (!document.getElementById('contact-hub')) {
       const html = `
       <div class="contact-hub" id="contact-hub">
+        <div class="contact-hub-anchor">
         <div class="contact-hub-menu" id="contact-hub-menu" aria-hidden="true">
           <button type="button" class="contact-hub-action contact-hub-action--chat" data-action="chat" aria-label="Open chatbot">
             <span class="contact-hub-action-icon"><i class="fas fa-robot"></i></span>
@@ -1326,11 +1327,11 @@
           </a>
           <a href="mailto:${SF_EMAIL}?subject=Salon%20Factory%20Inquiry" class="contact-hub-action contact-hub-action--email" data-action="email" aria-label="Email">
             <span class="contact-hub-action-icon"><i class="fas fa-envelope"></i></span>
-            <span class="contact-hub-action-text"><strong>Email</strong><small>${SF_EMAIL}</small></span>
+            <span class="contact-hub-action-text"><strong>Mail</strong><small>${SF_EMAIL}</small></span>
           </a>
           <a href="tel:${SF_PHONE}" class="contact-hub-action contact-hub-action--call" data-action="call" aria-label="Call">
             <span class="contact-hub-action-icon"><i class="fas fa-phone"></i></span>
-            <span class="contact-hub-action-text"><strong>Call Now</strong><small>${SF_PHONE_DISPLAY}</small></span>
+            <span class="contact-hub-action-text"><strong>Call</strong><small>${SF_PHONE_DISPLAY}</small></span>
           </a>
         </div>
         <button type="button" class="contact-hub-fab" id="contact-hub-fab" aria-label="Contact options" aria-expanded="false">
@@ -1340,6 +1341,7 @@
           <span class="contact-hub-pulse contact-hub-pulse--2" aria-hidden="true"></span>
         </button>
         <span class="contact-hub-label">Contact</span>
+        </div>
       </div>
 
       <div class="sf-chatbot" id="sf-chatbot" aria-hidden="true">
@@ -1373,16 +1375,24 @@
     const chatQuick = document.getElementById('sf-chatbot-quick');
     const chatForm = document.getElementById('sf-chatbot-form');
     const chatInput = document.getElementById('sf-chatbot-input');
+    if (!fab || !menu) return;
+
     let hubOpen = false;
     let chatOpen = false;
     let chatBooted = false;
 
-    function toggleHub() {
-      hubOpen = !hubOpen;
+    function toggleHub(force) {
+      hubOpen = typeof force === 'boolean' ? force : !hubOpen;
       hub.classList.toggle('open', hubOpen);
-      fab.setAttribute('aria-expanded', hubOpen);
-      menu.setAttribute('aria-hidden', !hubOpen);
-      if (!hubOpen) fab.focus();
+      fab.setAttribute('aria-expanded', String(hubOpen));
+      menu.setAttribute('aria-hidden', String(!hubOpen));
+      if (!hubOpen) {
+        menu.querySelectorAll('.contact-hub-action').forEach((el) => {
+          el.style.animation = 'none';
+          void el.offsetHeight;
+          el.style.animation = '';
+        });
+      }
     }
 
     function renderQuickChips() {
@@ -1427,24 +1437,28 @@
     }
 
     function openChatbot() {
-      if (hubOpen) toggleHub();
+      if (hubOpen) toggleHub(false);
       chatOpen = true;
-      chatbot.classList.add('open');
-      chatbot.setAttribute('aria-hidden', 'false');
+      if (chatbot) {
+        chatbot.classList.add('open');
+        chatbot.setAttribute('aria-hidden', 'false');
+      }
       bootChat();
-      setTimeout(() => chatInput.focus(), 350);
+      if (chatInput) setTimeout(() => chatInput.focus(), 350);
     }
 
     function closeChatbot() {
       chatOpen = false;
-      chatbot.classList.remove('open');
-      chatbot.setAttribute('aria-hidden', 'true');
+      if (chatbot) {
+        chatbot.classList.remove('open');
+        chatbot.setAttribute('aria-hidden', 'true');
+      }
     }
 
     function sendUserMessage(text) {
       const msg = (text || '').trim();
-      if (!msg) return;
-      chatInput.value = '';
+      if (!msg || !chatMessages) return;
+      if (chatInput) chatInput.value = '';
       appendMessage(msg, 'user');
       const typing = showTyping();
       const delay = 600 + Math.random() * 900;
@@ -1454,29 +1468,56 @@
       }, delay);
     }
 
-    fab.addEventListener('click', toggleHub);
-
-    menu.querySelector('[data-action="chat"]').addEventListener('click', (e) => {
+    function onFabActivate(e) {
       e.preventDefault();
-      openChatbot();
+      e.stopPropagation();
+      toggleHub();
+    }
+
+    fab.addEventListener('click', (e) => {
+      if (fab.dataset.touchHandled === '1') {
+        fab.dataset.touchHandled = '0';
+        return;
+      }
+      onFabActivate(e);
     });
+    fab.addEventListener('touchend', (e) => {
+      fab.dataset.touchHandled = '1';
+      onFabActivate(e);
+    }, { passive: false });
 
-    chatClose.addEventListener('click', closeChatbot);
+    const chatBtn = menu.querySelector('[data-action="chat"]');
+    if (chatBtn) {
+      chatBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openChatbot();
+      });
+    }
 
-    chatForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      sendUserMessage(chatInput.value);
+    if (chatClose) chatClose.addEventListener('click', closeChatbot);
+
+    if (chatForm) {
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        sendUserMessage(chatInput?.value || '');
+      });
+    }
+
+    menu.querySelectorAll('.contact-hub-action').forEach((action) => {
+      action.addEventListener('click', (e) => e.stopPropagation());
     });
 
     document.addEventListener('click', (e) => {
       if (!hubOpen) return;
-      if (!hub.contains(e.target)) toggleHub();
+      if (e.target.closest('#contact-hub') || e.target.closest('#sf-chatbot')) return;
+      toggleHub(false);
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (chatOpen) closeChatbot();
-        else if (hubOpen) toggleHub();
+        else if (hubOpen) toggleHub(false);
       }
     });
   }
