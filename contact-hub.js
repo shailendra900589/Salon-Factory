@@ -4,9 +4,11 @@
 
   if (window.__sfContactHubReady) return;
 
-  const WHATSAPP_URL = 'https://wa.me/919876543210?text=Hi%20Salon%20Factory,%20I%20need%20help';
+  var WHATSAPP_URL = 'https://wa.me/919876543210?text=Hi%20Salon%20Factory,%20I%20need%20help';
+  var PIN_RIGHT = 16;
+  var PIN_BOTTOM = 20;
 
-  const DUMMY_REPLIES = {
+  var DUMMY_REPLIES = {
     greeting: [
       'Hello! I\'m SF Assistant (demo). Ask about products, delivery, warranty, or pricing.',
       'Welcome to Salon Factory! How can I help you today?'
@@ -38,7 +40,7 @@
   }
 
   function pickReply(text) {
-    const m = (text || '').toLowerCase();
+    var m = (text || '').toLowerCase();
     if (/hi|hello|hey|namaste|start/.test(m)) return pick(DUMMY_REPLIES.greeting);
     if (/price|cost|₹|chair|discount/.test(m)) return pick(DUMMY_REPLIES.price);
     if (/deliver|ship|days|track/.test(m)) return pick(DUMMY_REPLIES.delivery);
@@ -47,36 +49,76 @@
     return pick(DUMMY_REPLIES.default);
   }
 
+  function setImportant(el, prop, value) {
+    el.style.setProperty(prop, value, 'important');
+  }
+
   function pinHub(hub, chatbot) {
-    var props = [
-      ['position', 'fixed'],
-      ['right', '12px'],
-      ['left', 'auto'],
-      ['bottom', '18px'],
-      ['top', 'auto'],
-      ['width', 'auto'],
-      ['max-width', 'none'],
-      ['margin', '0'],
-      ['padding', '0'],
-      ['transform', 'none'],
-      ['translate', 'none'],
-      ['z-index', '99999']
-    ];
-    props.forEach(function (p) {
-      hub.style.setProperty(p[0], p[1], 'important');
+    if (!hub) return;
+
+    if (hub.parentElement !== document.body) {
+      document.body.appendChild(hub);
+    }
+
+    ['inset', 'top', 'left', 'right', 'bottom', 'transform', 'translate', 'margin', 'width', 'max-width'].forEach(function (prop) {
+      hub.style.removeProperty(prop);
     });
+
+    var bottom = window.innerWidth <= 768
+      ? 'max(18px, env(safe-area-inset-bottom, 0px))'
+      : PIN_BOTTOM + 'px';
+    var right = (window.innerWidth <= 768 ? 14 : PIN_RIGHT) + 'px';
+
+    setImportant(hub, 'position', 'fixed');
+    setImportant(hub, 'top', 'auto');
+    setImportant(hub, 'left', 'auto');
+    setImportant(hub, 'right', right);
+    setImportant(hub, 'bottom', bottom);
+    setImportant(hub, 'width', 'auto');
+    setImportant(hub, 'max-width', 'none');
+    setImportant(hub, 'margin', '0');
+    setImportant(hub, 'padding', '0');
+    setImportant(hub, 'transform', 'none');
+    setImportant(hub, 'translate', 'none');
+    setImportant(hub, 'z-index', '99999');
 
     var anchor = hub.querySelector('.contact-hub-anchor');
     if (anchor) {
-      anchor.style.setProperty('display', 'inline-flex', 'important');
-      anchor.style.setProperty('width', 'auto', 'important');
-      anchor.style.setProperty('justify-content', 'flex-end', 'important');
+      setImportant(anchor, 'display', 'inline-flex');
+      setImportant(anchor, 'width', 'auto');
+      setImportant(anchor, 'max-width', 'none');
+      setImportant(anchor, 'justify-content', 'flex-end');
+      setImportant(anchor, 'margin', '0');
     }
 
     if (chatbot) {
-      chatbot.style.setProperty('right', '12px', 'important');
-      chatbot.style.setProperty('left', 'auto', 'important');
-      chatbot.style.setProperty('z-index', '99998', 'important');
+      if (chatbot.parentElement !== document.body) {
+        document.body.appendChild(chatbot);
+      }
+      setImportant(chatbot, 'position', 'fixed');
+      setImportant(chatbot, 'left', 'auto');
+      setImportant(chatbot, 'right', right);
+      setImportant(chatbot, 'z-index', '99998');
+    }
+
+    requestAnimationFrame(function () {
+      verifyPin(hub);
+    });
+  }
+
+  function verifyPin(hub) {
+    if (!hub || !hub.getBoundingClientRect) return;
+    var rect = hub.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    var rightGap = vw - rect.right;
+    var isCentered = rect.left > vw * 0.25 && rect.left < vw * 0.55;
+
+    if (isCentered || rightGap > 80 || rightGap < 0) {
+      setImportant(hub, 'left', 'auto');
+      setImportant(hub, 'right', (window.innerWidth <= 768 ? 14 : PIN_RIGHT) + 'px');
+      setImportant(hub, 'transform', 'none');
+      setImportant(hub, 'margin-left', '0');
+      setImportant(hub, 'margin-right', '0');
     }
   }
 
@@ -96,13 +138,15 @@
       return;
     }
 
-    if (hub.parentElement !== document.body) document.body.appendChild(hub);
-    if (chatbot && chatbot.parentElement !== document.body) document.body.appendChild(chatbot);
     pinHub(hub, chatbot);
 
     function repin() { pinHub(hub, chatbot); }
     window.addEventListener('resize', repin);
-    window.addEventListener('orientationchange', function () { setTimeout(repin, 120); });
+    window.addEventListener('orientationchange', function () { setTimeout(repin, 150); });
+    window.addEventListener('scroll', repin, { passive: true });
+    window.addEventListener('load', repin);
+    setTimeout(repin, 400);
+    setTimeout(repin, 1200);
 
     var menuOpen = false;
     var chatOpen = false;
@@ -114,6 +158,7 @@
       hub.classList.toggle('open', open);
       fab.setAttribute('aria-expanded', String(open));
       menu.setAttribute('aria-hidden', String(!open));
+      repin();
     }
 
     function showTyping() {

@@ -2580,31 +2580,6 @@ body.banner-hidden .filter-bar { top: var(--header-height); }
   }
   .process-grid { grid-template-columns: 1fr; }
   .mega-menu { display: none; }
-  .contact-hub {
-    bottom: max(18px, env(safe-area-inset-bottom, 0px)) !important;
-    right: max(12px, env(safe-area-inset-right, 0px)) !important;
-    left: auto !important;
-    width: auto !important;
-    max-width: none !important;
-    transform: none !important;
-  }
-  .contact-hub-menu,
-  .contact-hub-action {
-    min-width: min(260px, calc(100vw - 2rem));
-  }
-  .contact-hub-fab {
-    width: 56px;
-    height: 56px;
-    font-size: 1.25rem;
-  }
-  .sf-chatbot {
-    right: max(12px, env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
-    left: max(12px, env(safe-area-inset-left, 0px)) !important;
-    width: auto !important;
-    max-width: calc(100vw - 24px) !important;
-    max-height: calc(100vh - 7rem - env(safe-area-inset-bottom, 0px));
-  }
   .mobile-menu {
     top: var(--header-height);
     padding: 1rem 1.25rem 1.5rem;
@@ -2629,7 +2604,6 @@ body.banner-hidden .filter-bar { top: var(--header-height); }
   .checkout-form-grid { grid-template-columns: 1fr; }
   .checkout-steps { flex-wrap: wrap; gap: 0.5rem; }
   .checkout-step-line { display: none; }
-  .contact-hub-label { display: none; }
   .reveal, .reveal-stagger > *, .line-inner { opacity: 1 !important; transform: none !important; }
 }
 
@@ -3989,23 +3963,11 @@ body.banner-hidden .shop-hero-banner {
 .banner-social a[href*="whatsapp"]:hover { color: #25D366; }
 
 /* ============================================
-   CONTACT HUB + CHATBOT (Global)
+   CONTACT HUB + CHATBOT (visual styles only — positioning in contact-hub.css)
    ============================================ */
-.contact-hub {
-  position: fixed !important;
-  bottom: max(1.35rem, env(safe-area-inset-bottom, 0px)) !important;
-  right: max(0.5rem, env(safe-area-inset-right, 0px)) !important;
-  left: auto !important;
-  top: auto !important;
-  z-index: 99999 !important;
-  pointer-events: auto !important;
-  margin: 0 !important;
-  transform: none !important;
-  width: auto !important;
-}
 .contact-hub-anchor {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: flex-end;
   pointer-events: auto;
@@ -4173,10 +4135,6 @@ body.banner-hidden .shop-hero-banner {
 }
 
 .sf-chatbot {
-  position: fixed !important;
-  bottom: 6.25rem !important;
-  right: max(0.5rem, env(safe-area-inset-right, 0px)) !important;
-  left: auto !important;
   width: 100%;
   max-width: 380px;
   height: 520px;
@@ -4185,7 +4143,6 @@ body.banner-hidden .shop-hero-banner {
   border: 1px solid rgba(201, 161, 93, 0.25);
   border-radius: var(--radius-xl);
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
-  z-index: 99998 !important;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -4423,26 +4380,4 @@ body.banner-hidden .shop-hero-banner {
   }
   .cart-line-total-col strong { font-size: 1.1rem; }
   .cart-line-total-label { margin: 0; }
-}
-
-/* Contact FAB — hard pin bottom-right (all viewports) */
-#contact-hub {
-  position: fixed !important;
-  inset: auto 12px 18px auto !important;
-  top: auto !important;
-  right: 12px !important;
-  bottom: 18px !important;
-  left: auto !important;
-  width: auto !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  transform: none !important;
-  translate: none !important;
-  z-index: 99999 !important;
-}
-#contact-hub .contact-hub-anchor {
-  display: inline-flex !important;
-  width: auto !important;
-  justify-content: flex-end !important;
 }

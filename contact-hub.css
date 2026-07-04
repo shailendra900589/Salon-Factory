@@ -1,0 +1,83 @@
+/**
+ * Contact FAB + Chatbot positioning — single source of truth.
+ * Load after styles.css. Do not duplicate these rules elsewhere.
+ */
+
+#contact-hub,
+#contact-hub.contact-hub {
+  position: fixed;
+  top: auto;
+  right: 16px;
+  bottom: 20px;
+  left: auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  transform: none;
+  translate: none;
+  z-index: 99999;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+#contact-hub .contact-hub-anchor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+}
+
+#sf-chatbot {
+  position: fixed;
+  top: auto;
+  right: 16px;
+  bottom: 6.25rem;
+  left: auto;
+  z-index: 99998;
+}
+
+@media (max-width: 768px) {
+  #contact-hub,
+  #contact-hub.contact-hub {
+    right: 14px;
+    bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  }
+
+  #contact-hub .contact-hub-fab {
+    width: 56px;
+    height: 56px;
+    font-size: 1.25rem;
+  }
+
+  #contact-hub .contact-hub-menu,
+  #contact-hub .contact-hub-action {
+    min-width: min(260px, calc(100vw - 2rem));
+  }
+
+  #contact-hub .contact-hub-label {
+    display: none;
+  }
+
+  #sf-chatbot {
+    right: 14px;
+    left: 14px;
+    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    max-width: calc(100vw - 28px);
+    max-height: calc(100vh - 7rem - env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #contact-hub,
+  #contact-hub.contact-hub {
+    right: 16px;
+    bottom: 22px;
+  }
+}
