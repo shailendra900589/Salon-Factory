@@ -145,6 +145,12 @@
     const header = document.querySelector('.site-header');
     if (!header) return;
 
+    if (isMobile) {
+      document.body.classList.add('banner-hidden');
+      const banner = document.querySelector('.shop-hero-banner');
+      if (banner) banner.setAttribute('aria-hidden', 'true');
+    }
+
     let lastScrollY = window.scrollY;
     let ticking = false;
     const SCROLL_THRESHOLD = 8;
@@ -166,6 +172,10 @@
           } else if (currentY < lastScrollY - SCROLL_THRESHOLD) {
             document.body.classList.remove('banner-hidden');
           }
+        }
+
+        if (isMobile) {
+          document.body.classList.add('banner-hidden');
         }
 
         lastScrollY = currentY;
@@ -1443,6 +1453,12 @@
     }
 
     fab.addEventListener('click', toggleHub);
+
+    document.querySelectorAll('.header-contact-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!hubOpen) toggleHub();
+      });
+    });
 
     menu.querySelector('[data-action="chat"]').addEventListener('click', (e) => {
       e.preventDefault();

@@ -12,7 +12,7 @@
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   <link rel="prefetch" href="collections.html">
   <link rel="prefetch" href="cart.html">
-  <style>html,body{background:#0B0B0D;color:#F5F1EA}@media(max-width:768px){.shop-hero-banner{display:none!important}.hero-visual{display:none!important}:root{--banner-height:0px}}</style>
+  <style>html,body{background:#0B0B0D;color:#F5F1EA}@media(max-width:768px){.shop-hero-banner,.banner-marquee,.banner-social{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important}.hero-visual{display:none!important}:root{--banner-height:0px}.site-header,.site-header.scrolled{top:0!important}}</style>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -65,11 +65,12 @@
           <li><a href="our-clients.html">Clients</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <div class="header-actions">
-          <button class="cart-trigger" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></button>
-          <a href="collections.html" class="btn btn-primary btn-magnetic">Shop Now</a>
-        </div>
       </nav>
+      <div class="header-actions">
+        <button type="button" class="header-contact-btn" aria-label="Contact us"><i class="fas fa-headset"></i></button>
+        <button class="cart-trigger" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></button>
+        <a href="collections.html" class="btn btn-primary btn-magnetic">Shop Now</a>
+      </div>
       <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </header>

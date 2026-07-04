@@ -2310,6 +2310,14 @@ body.banner-hidden .filter-bar { top: var(--header-height); }
 @media (max-width: 1024px) {
   .nav-desktop { display: none; }
   .menu-toggle { display: flex; }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+    margin-right: 0.25rem;
+    flex-shrink: 0;
+  }
   .hero-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
   .hero-content { order: 1; }
   .hero-visual { order: 2; max-width: 420px; margin: 0 auto; width: 100%; }
@@ -2348,13 +2356,33 @@ body.banner-hidden .filter-bar { top: var(--header-height); }
   button, a, .btn { cursor: pointer; }
   .cursor-dot, .cursor-ring { display: none; }
 
-  /* Hide top marquee banner completely on phone */
-  .shop-hero-banner { display: none !important; }
+  /* Hide top marquee banner completely on phone — never show on scroll */
+  .shop-hero-banner,
+  .banner-marquee,
+  .banner-marquee-track,
+  .banner-social {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    border: none !important;
+    animation: none !important;
+    transform: translateY(-100%) !important;
+  }
+  .site-header,
+  body.banner-hidden .site-header {
+    top: 0 !important;
+  }
 
   .header-inner { padding: 0 0.85rem; height: var(--header-height); }
   .logo { font-size: 1rem; gap: 0.5rem; }
   .logo-icon { width: 34px; height: 34px; font-size: 0.85rem; }
   .header-actions .btn-primary { display: none; }
+  .header-contact-btn { width: 38px; height: 38px; font-size: 0.95rem; }
   .cart-trigger { width: 40px; height: 40px; }
 
   /* Homepage hero — text only on phone, hide product visual card */
@@ -2580,8 +2608,11 @@ body.banner-hidden .filter-bar { top: var(--header-height); }
   html { scroll-behavior: auto; }
   .marquee-track { animation: none; }
   body { opacity: 1; }
-  body.banner-hidden .shop-hero-banner { transform: none; }
   .reveal { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 769px) {
+  body.banner-hidden .shop-hero-banner { transform: none; }
 }
 
 /* ============================================
@@ -2591,6 +2622,28 @@ body.banner-hidden .filter-bar { top: var(--header-height); }
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+}
+.header-contact-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: rgba(201, 161, 93, 0.12);
+  color: var(--gold);
+  font-size: 1rem;
+  flex-shrink: 0;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease-out-expo);
+}
+.header-contact-btn:hover {
+  background: rgba(201, 161, 93, 0.22);
+  border-color: rgba(201, 161, 93, 0.45);
+  transform: scale(1.05);
+}
+@media (max-width: 1024px) {
+  .header-contact-btn { display: flex; }
 }
 .header-shop-link {
   font-size: 0.85rem;
