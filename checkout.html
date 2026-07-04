@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Salon Factory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>html,body{background:#0B0B0D;color:#F5F1EA}</style>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="shop-hero-banner">
+    <div class="banner-marquee">
+      <div class="banner-marquee-track">
+        <span class="banner-marquee-content">
+          <strong><i class="fas fa-bolt"></i> Factory Direct Sale</strong> — Up to 30% off · Free shipping above ₹25,000 · <a href="collections.html">Shop Now</a>
+          <span class="banner-marquee-sep">✦</span>
+          <strong><i class="fas fa-truck-fast"></i> Pan-India Delivery</strong> — Ships in 7–15 days
+          <span class="banner-marquee-sep">✦</span>
+          <strong><i class="fas fa-shield-halved"></i> 1 Year Warranty</strong> — On all furniture
+          <span class="banner-marquee-sep">✦</span>
+          <strong><i class="fas fa-file-invoice"></i> GST Invoice</strong> — Included on every order
+        </span>
+        <span class="banner-marquee-content" aria-hidden="true">
+          <strong><i class="fas fa-bolt"></i> Factory Direct Sale</strong> — Up to 30% off · Free shipping above ₹25,000 · <a href="collections.html">Shop Now</a>
+          <span class="banner-marquee-sep">✦</span>
+          <strong><i class="fas fa-truck-fast"></i> Pan-India Delivery</strong> — Ships in 7–15 days
+          <span class="banner-marquee-sep">✦</span>
+          <strong><i class="fas fa-shield-halved"></i> 1 Year Warranty</strong> — On all furniture
+          <span class="banner-marquee-sep">✦</span>
+          <strong><i class="fas fa-file-invoice"></i> GST Invoice</strong> — Included on every order
+        </span>
+      </div>
+    </div>
+    <div class="banner-social">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <header class="site-header site-header--solid">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><span class="logo-icon">SF</span> Salon Factory</a>
+      <nav class="nav-desktop">
+        <ul class="nav-links">
+          <li><a href="collections.html">Shop</a></li>
+          <li class="nav-item-mega">
+            <a href="collections.html">Collections <i class="fas fa-chevron-down" style="font-size:0.65rem"></i></a>
+            <div class="mega-menu"><div class="mega-grid" id="mega-menu-grid"></div></div>
+          </li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="our-clients.html">Clients</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="header-actions">
+          <button class="cart-trigger" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></button>
+          <a href="collections.html" class="btn btn-primary btn-magnetic">Shop Now</a>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <nav class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="collections.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="our-clients.html">Clients</a>
+    <a href="cart.html">Cart</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main id="checkout-main" class="checkout-page-main">
+    <div class="product-breadcrumb-bar">
+      <div class="container">
+        <nav class="breadcrumb"><a href="index.html">Home</a> / <a href="cart.html">Cart</a> / <span>Checkout</span></nav>
+      </div>
+    </div>
+
+    <section class="checkout-hero">
+      <div class="container checkout-hero-inner">
+        <div>
+          <p class="section-label">Almost There</p>
+          <h1>Secure Checkout</h1>
+          <p class="section-subtitle">Complete your order with factory-direct pricing, GST invoice, and pan-India delivery.</p>
+        </div>
+        <div class="checkout-hero-badges">
+          <span><i class="fas fa-lock"></i> SSL Secure</span>
+          <span><i class="fas fa-file-invoice"></i> GST Invoice</span>
+          <span><i class="fas fa-truck-fast"></i> Free Ship ₹25K+</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="checkout-page">
+      <div class="container checkout-layout">
+        <div class="checkout-main-col">
+          <div class="checkout-steps" id="checkout-steps" aria-label="Checkout progress">
+            <div class="checkout-step active" data-step="1">
+              <span class="step-num">1</span>
+              <span class="step-label">Shipping</span>
+            </div>
+            <div class="checkout-step-line" aria-hidden="true"></div>
+            <div class="checkout-step" data-step="2">
+              <span class="step-num">2</span>
+              <span class="step-label">Payment</span>
+            </div>
+            <div class="checkout-step-line" aria-hidden="true"></div>
+            <div class="checkout-step" data-step="3">
+              <span class="step-num">3</span>
+              <span class="step-label">Confirm</span>
+            </div>
+          </div>
+
+          <div class="checkout-form-section">
+            <div class="checkout-panel active" data-panel="1">
+              <div class="checkout-panel-head">
+                <h2>Delivery Details</h2>
+                <p>Where should we deliver your salon furniture?</p>
+              </div>
+              <form id="checkout-shipping-form" class="checkout-form" novalidate>
+                <div class="checkout-form-grid">
+                  <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="fname" required autocomplete="given-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lname" required autocomplete="family-name">
+                  </div>
+                  <div class="form-group form-group--full">
+                    <label for="cemail">Email Address</label>
+                    <input type="email" id="cemail" name="cemail" required autocomplete="email">
+                  </div>
+                  <div class="form-group form-group--full">
+                    <label for="cphone">Phone / WhatsApp</label>
+                    <input type="tel" id="cphone" name="cphone" required autocomplete="tel">
+                  </div>
+                  <div class="form-group form-group--full">
+                    <label for="address">Delivery Address</label>
+                    <input type="text" id="address" name="address" required autocomplete="street-address">
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required autocomplete="address-level2">
+                  </div>
+                  <div class="form-group">
+                    <label for="pincode">PIN Code</label>
+                    <input type="text" id="pincode" name="pincode" required pattern="[0-9]{6}" maxlength="6" inputmode="numeric" autocomplete="postal-code">
+                  </div>
+                  <div class="form-group form-group--full">
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state" required autocomplete="address-level1">
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-ripple checkout-continue-btn" id="checkout-continue">
+                  Continue to Payment <i class="fas fa-arrow-right"></i>
+                </button>
+              </form>
+            </div>
+
+            <div class="checkout-panel" data-panel="2">
+              <div class="checkout-panel-head">
+                <h2>Payment Method</h2>
+                <p>Choose how you'd like to pay for your order.</p>
+              </div>
+
+              <div class="checkout-shipping-review" id="shipping-review" aria-live="polite"></div>
+
+              <div class="payment-methods" role="radiogroup" aria-label="Payment method">
+                <button type="button" class="payment-method active" data-method="upi" aria-pressed="true">
+                  <i class="fas fa-mobile-alt"></i>
+                  <strong>UPI</strong>
+                  <span>GPay, PhonePe, Paytm</span>
+                </button>
+                <button type="button" class="payment-method" data-method="card" aria-pressed="false">
+                  <i class="fas fa-credit-card"></i>
+                  <strong>Card</strong>
+                  <span>Visa, Mastercard, RuPay</span>
+                </button>
+                <button type="button" class="payment-method" data-method="cod" aria-pressed="false">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <strong>COD</strong>
+                  <span>Pay on delivery</span>
+                </button>
+              </div>
+
+              <form id="checkout-form">
+                <button type="submit" class="btn btn-primary btn-ripple checkout-place-btn">
+                  <i class="fas fa-lock"></i> Place Order
+                </button>
+                <button type="button" class="btn btn-ghost checkout-back-btn" id="checkout-back">
+                  <i class="fas fa-arrow-left"></i> Back to Shipping
+                </button>
+                <p class="checkout-secure-note">
+                  <i class="fas fa-shield-alt"></i> Secure checkout · GST invoice included · 1-year warranty
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <aside class="checkout-summary-aside">
+          <div class="cart-summary checkout-summary-card">
+            <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+            <div id="checkout-summary">Loading...</div>
+            <div class="cart-summary-trust checkout-summary-trust">
+              <span><i class="fas fa-truck-fast"></i> 7–15 day delivery</span>
+              <span><i class="fas fa-shield-halved"></i> 1-year warranty</span>
+              <span><i class="fas fa-rotate-left"></i> Easy returns</span>
+            </div>
+            <a href="cart.html" class="checkout-edit-cart"><i class="fas fa-pen"></i> Edit cart</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo"><span class="logo-icon">SF</span> Salon Factory</a>
+          <p>India's premium online salon furniture store. Factory-direct pricing, ISO certified, 5,000+ salons served since 2020.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/919876543210" class="social-link"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Shop</h4><ul><li><a href="collections.html">All Products</a></li><li><a href="collections.html">Salon Chairs</a></li><li><a href="collections.html">Barber Chairs</a></li><li><a href="cart.html">Shopping Cart</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="our-clients.html">Our Clients</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="contact.html">Track Order</a></li><li><a href="#">Returns</a></li><li><a href="#">Warranty</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+919876543210">+91 98765 43210</a></li><li><a href="mailto:info@salonfactory.in">info@salonfactory.in</a></li><li><a href="https://wa.me/919876543210">WhatsApp</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <span>© 2026 Salon Factory. All rights reserved.</span>
+          <span class="footer-credit">Designed &amp; Developed by <a href="https://nectradigit.com" target="_blank" rel="noopener noreferrer">NectraDigit</a></span>
+        </div>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
