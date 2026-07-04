@@ -8,6 +8,8 @@
 
   const WHATSAPP = 'https://wa.me/919876543210?text=Hi%20Salon%20Factory,%20I%20need%20a%20bulk%20quote';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const isTouch = isMobile || 'ontouchstart' in window;
 
   /* ---- Page Load — no opacity flash on navigation ---- */
   function boot() {
@@ -33,23 +35,15 @@
   const CART_KEY = 'sf_cart';
 
   function initAll() {
-    if (typeof gsap !== 'undefined') gsap.defaults({ immediateRender: false });
     initImageFallbacks();
     initShopUI();
     initCart();
-    initCustomCursor();
+    if (!isTouch) initCustomCursor();
     initHeader();
     initMobileMenu();
-    initMagneticButtons();
-    initHeroAnimations();
-    initScrollReveals();
     initCounters();
     initFAQ();
     renderDynamicContent();
-    initMarquee();
-    initCarousel();
-    initBentoTilt();
-    initTimeline();
     initFilters();
     initGallery();
     initSwatches();
@@ -62,6 +56,21 @@
     initPaymentMethods();
     initContactHub();
     initInspectBlock();
+
+    if (isMobile || prefersReducedMotion) {
+      ensureVisibleContent();
+      initScrollReveals();
+      return;
+    }
+
+    if (typeof gsap !== 'undefined') gsap.defaults({ immediateRender: false });
+    initMagneticButtons();
+    initHeroAnimations();
+    initScrollReveals();
+    initMarquee();
+    initCarousel();
+    initBentoTilt();
+    initTimeline();
   }
 
   /* ---- Block DevTools keyboard shortcuts (right-click allowed) ---- */
@@ -155,12 +164,14 @@
 
         header.classList.toggle('scrolled', currentY > 40);
 
-        if (currentY <= TOP_OFFSET) {
-          document.body.classList.remove('banner-hidden');
-        } else if (currentY > lastScrollY + SCROLL_THRESHOLD) {
-          document.body.classList.add('banner-hidden');
-        } else if (currentY < lastScrollY - SCROLL_THRESHOLD) {
-          document.body.classList.remove('banner-hidden');
+        if (!isMobile && document.querySelector('.shop-hero-banner')) {
+          if (currentY <= TOP_OFFSET) {
+            document.body.classList.remove('banner-hidden');
+          } else if (currentY > lastScrollY + SCROLL_THRESHOLD) {
+            document.body.classList.add('banner-hidden');
+          } else if (currentY < lastScrollY - SCROLL_THRESHOLD) {
+            document.body.classList.remove('banner-hidden');
+          }
         }
 
         lastScrollY = currentY;
@@ -213,7 +224,7 @@
   /* ---- Hero GSAP Animations ---- */
   function initHeroAnimations() {
     const heroEls = document.querySelectorAll('.hero-title .line-inner, .hero-eyebrow span, .hero-subtitle, .hero-ctas .btn, .trust-pill');
-    if (typeof gsap === 'undefined' || prefersReducedMotion) {
+    if (isMobile || typeof gsap === 'undefined' || prefersReducedMotion) {
       heroEls.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
       return;
     }
@@ -250,7 +261,7 @@
 
   /* ---- Scroll Reveals (GSAP + IO fallback) ---- */
   function initScrollReveals() {
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
+    if (!isMobile && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
       gsap.utils.toArray('.reveal').forEach((el) => {
         gsap.from(el, {
           y: 36,
@@ -471,7 +482,7 @@
           const value = tag.dataset.value;
           applyFilter(value);
 
-          if (typeof gsap !== 'undefined' && !prefersReducedMotion) {
+          if (!isMobile && typeof gsap !== 'undefined' && !prefersReducedMotion) {
             const visibleItems = [...items].filter((item) => !item.classList.contains('hidden'));
             gsap.fromTo(visibleItems, { y: 16 }, { y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' });
           }
@@ -779,6 +790,13 @@
 
   function renderDynamicContent() {
     if (typeof SF_PRODUCTS === 'undefined') return;
+
+    const mega = document.getElementById('mega-menu-grid');
+    if (mega && typeof SF_CATEGORIES !== 'undefined') {
+      mega.innerHTML = SF_CATEGORIES.map((c) =>
+        `<a href="collections.html?cat=${c.filter}" class="mega-item"><img src="${c.image}" alt="${c.name}" loading="lazy"><span>${c.name}</span></a>`
+      ).join('');
+    }
 
     const trending = document.querySelector('[data-render="trending"]');
     if (trending) trending.innerHTML = getTrending().map(p => buildShopCard(p)).join('');

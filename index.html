@@ -9,7 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>html,body{background:#0B0B0D;color:#F5F1EA}</style>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="prefetch" href="collections.html">
+  <link rel="prefetch" href="cart.html">
+  <style>html,body{background:#0B0B0D;color:#F5F1EA}@media(max-width:768px){.shop-hero-banner{display:none!important}:root{--banner-height:0px}}</style>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -82,7 +85,7 @@
   <main>
     <section class="hero">
       <div class="hero-bg" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb04d?auto=format&fit=crop&w=1920&q=80" alt="" loading="eager">
+        <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb04d?auto=format&fit=crop&w=1200&q=70" alt="" loading="eager" fetchpriority="high" decoding="async">
       </div>
       <div class="blueprint-grid"></div>
       <div class="hero-vignette"></div>
@@ -285,17 +288,10 @@
     </div>
   </footer>
 
-  <script src="products.js"></script>
-  <script>
-    if (typeof SF_CATEGORIES !== 'undefined') {
-      document.getElementById('mega-menu-grid').innerHTML = SF_CATEGORIES.map(c =>
-        `<a href="collections.html?cat=${c.filter}" class="mega-item"><img src="${c.image}" alt="${c.name}" loading="lazy"><span>${c.name}</span></a>`
-      ).join('');
-    }
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>if(typeof gsap!=='undefined')gsap.registerPlugin(ScrollTrigger);</script>
-  <script src="script.js"></script>
+  <script src="products.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script defer>if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined')gsap.registerPlugin(ScrollTrigger);</script>
+  <script src="script.js" defer></script>
 </body>
 </html>
