@@ -1312,9 +1312,8 @@
   }
 
   function initContactHub() {
-    if (document.getElementById('contact-hub')) return;
-
-    const html = `
+    if (!document.getElementById('contact-hub')) {
+      const html = `
       <div class="contact-hub" id="contact-hub">
         <div class="contact-hub-menu" id="contact-hub-menu" aria-hidden="true">
           <button type="button" class="contact-hub-action contact-hub-action--chat" data-action="chat" aria-label="Open chatbot">
@@ -1359,10 +1358,13 @@
           <button type="submit" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
         </form>
       </div>`;
-
-    document.body.insertAdjacentHTML('beforeend', html);
+      document.body.insertAdjacentHTML('beforeend', html);
+    }
 
     const hub = document.getElementById('contact-hub');
+    if (!hub || hub.dataset.wired === '1') return;
+    hub.dataset.wired = '1';
+
     const fab = document.getElementById('contact-hub-fab');
     const menu = document.getElementById('contact-hub-menu');
     const chatbot = document.getElementById('sf-chatbot');
@@ -1453,12 +1455,6 @@
     }
 
     fab.addEventListener('click', toggleHub);
-
-    document.querySelectorAll('.header-contact-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (!hubOpen) toggleHub();
-      });
-    });
 
     menu.querySelector('[data-action="chat"]').addEventListener('click', (e) => {
       e.preventDefault();
