@@ -7,8 +7,8 @@
 #contact-hub.contact-hub {
   position: fixed;
   top: auto;
-  right: 16px;
-  bottom: 20px;
+  right: 10px;
+  bottom: 10px;
   left: auto;
   width: auto;
   max-width: none;
@@ -24,8 +24,9 @@
 #contact-hub .contact-hub-anchor {
   position: relative;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
+  flex-direction: column;
   width: auto;
   max-width: none;
   margin: 0;
@@ -33,11 +34,17 @@
   pointer-events: auto;
 }
 
+#contact-hub .contact-hub-menu {
+  right: 0;
+  left: auto;
+  transform-origin: bottom right;
+}
+
 #sf-chatbot {
   position: fixed;
   top: auto;
-  right: 16px;
-  bottom: 6.25rem;
+  right: 10px;
+  bottom: 5.5rem;
   left: auto;
   z-index: 99998;
 }
@@ -45,8 +52,8 @@
 @media (max-width: 768px) {
   #contact-hub,
   #contact-hub.contact-hub {
-    right: 14px;
-    bottom: max(18px, env(safe-area-inset-bottom, 0px));
+    right: max(10px, env(safe-area-inset-right, 0px));
+    bottom: max(10px, env(safe-area-inset-bottom, 0px));
   }
 
   #contact-hub .contact-hub-fab {
@@ -57,7 +64,7 @@
 
   #contact-hub .contact-hub-menu,
   #contact-hub .contact-hub-action {
-    min-width: min(260px, calc(100vw - 2rem));
+    min-width: min(260px, calc(100vw - 1.5rem));
   }
 
   #contact-hub .contact-hub-label {
@@ -65,19 +72,19 @@
   }
 
   #sf-chatbot {
-    right: 14px;
-    left: 14px;
-    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    right: max(10px, env(safe-area-inset-right, 0px));
+    left: max(10px, env(safe-area-inset-left, 0px));
+    bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
     width: auto;
-    max-width: calc(100vw - 28px);
+    max-width: calc(100vw - 20px);
     max-height: calc(100vh - 7rem - env(safe-area-inset-bottom, 0px));
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) {
   #contact-hub,
   #contact-hub.contact-hub {
-    right: 16px;
-    bottom: 22px;
+    right: 10px;
+    bottom: 10px;
   }
 }

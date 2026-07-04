@@ -5,8 +5,8 @@
   if (window.__sfContactHubReady) return;
 
   var WHATSAPP_URL = 'https://wa.me/919876543210?text=Hi%20Salon%20Factory,%20I%20need%20help';
-  var PIN_RIGHT = 16;
-  var PIN_BOTTOM = 20;
+  var PIN_RIGHT = 10;
+  var PIN_BOTTOM = 10;
 
   var DUMMY_REPLIES = {
     greeting: [
@@ -64,10 +64,13 @@
       hub.style.removeProperty(prop);
     });
 
-    var bottom = window.innerWidth <= 768
-      ? 'max(18px, env(safe-area-inset-bottom, 0px))'
+    var isPhone = window.innerWidth <= 768;
+    var bottom = isPhone
+      ? 'max(10px, env(safe-area-inset-bottom, 0px))'
       : PIN_BOTTOM + 'px';
-    var right = (window.innerWidth <= 768 ? 14 : PIN_RIGHT) + 'px';
+    var right = isPhone
+      ? 'max(10px, env(safe-area-inset-right, 0px))'
+      : PIN_RIGHT + 'px';
 
     setImportant(hub, 'position', 'fixed');
     setImportant(hub, 'top', 'auto');
@@ -87,7 +90,8 @@
       setImportant(anchor, 'display', 'inline-flex');
       setImportant(anchor, 'width', 'auto');
       setImportant(anchor, 'max-width', 'none');
-      setImportant(anchor, 'justify-content', 'flex-end');
+      setImportant(anchor, 'align-items', 'flex-end');
+      setImportant(anchor, 'flex-direction', 'column');
       setImportant(anchor, 'margin', '0');
     }
 
@@ -113,9 +117,14 @@
     var rightGap = vw - rect.right;
     var isCentered = rect.left > vw * 0.25 && rect.left < vw * 0.55;
 
-    if (isCentered || rightGap > 80 || rightGap < 0) {
+    if (isCentered || rightGap > 40 || rightGap < 0) {
       setImportant(hub, 'left', 'auto');
-      setImportant(hub, 'right', (window.innerWidth <= 768 ? 14 : PIN_RIGHT) + 'px');
+      setImportant(hub, 'right', window.innerWidth <= 768
+        ? 'max(10px, env(safe-area-inset-right, 0px))'
+        : PIN_RIGHT + 'px');
+      setImportant(hub, 'bottom', window.innerWidth <= 768
+        ? 'max(10px, env(safe-area-inset-bottom, 0px))'
+        : PIN_BOTTOM + 'px');
       setImportant(hub, 'transform', 'none');
       setImportant(hub, 'margin-left', '0');
       setImportant(hub, 'margin-right', '0');
