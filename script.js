@@ -11,17 +11,11 @@
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   const isTouch = isMobile || 'ontouchstart' in window;
 
-  /* ---- Page Load — no opacity flash on navigation ---- */
+  /* ---- Page Load — boot runs after all modules are defined (see end of file) ---- */
   function boot() {
     initAll();
     ensureVisibleContent();
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-  setTimeout(ensureVisibleContent, 300);
 
   function ensureVisibleContent() {
     document.querySelectorAll('.reveal, .reveal-stagger > *, .line-inner, .hero-eyebrow span').forEach((el) => {
@@ -1476,5 +1470,12 @@
   }
 
   window.SalonFactory = { whatsapp: WHATSAPP, addToCart, getCart, cartTotal, openCart };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+  setTimeout(ensureVisibleContent, 300);
 
 })();
