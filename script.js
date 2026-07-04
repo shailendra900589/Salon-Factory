@@ -464,7 +464,11 @@
   function initFilters() {
     document.querySelectorAll('.filter-tags').forEach((bar) => {
       const filterType = bar.dataset.filter;
-      const items = document.querySelectorAll(`[data-${filterType}]`);
+      const scope = bar.closest('main, .shop-page, .page-content, body') || document;
+      const grid = scope.querySelector('.catalog-grid, .clients-wall, .collection-grid');
+      const items = grid
+        ? grid.querySelectorAll(`[data-${filterType}]`)
+        : scope.querySelectorAll(`[data-${filterType}]`);
       const countEl = document.getElementById('product-count');
       const emptyEl = document.getElementById('catalog-empty');
 
@@ -473,7 +477,11 @@
         items.forEach((item) => {
           const match = value === 'all' || item.dataset[filterType] === value;
           item.classList.toggle('hidden', !match);
-          if (match) visible++;
+          if (match) {
+            visible++;
+            item.style.transform = '';
+            item.style.opacity = '';
+          }
         });
         if (countEl) countEl.textContent = `${visible} Product${visible !== 1 ? 's' : ''}`;
         if (emptyEl) emptyEl.classList.toggle('hidden', visible > 0);
@@ -483,15 +491,20 @@
         tag.addEventListener('click', () => {
           bar.querySelectorAll('.filter-tag').forEach((t) => t.classList.remove('active'));
           tag.classList.add('active');
-          const value = tag.dataset.value;
-          applyFilter(value);
-
-          if (!isMobile && typeof gsap !== 'undefined' && !prefersReducedMotion) {
-            const visibleItems = [...items].filter((item) => !item.classList.contains('hidden'));
-            gsap.fromTo(visibleItems, { y: 16 }, { y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' });
-          }
+          applyFilter(tag.dataset.value);
         });
       });
+
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('cat');
+      if (cat) {
+        const matchTag = bar.querySelector(`.filter-tag[data-value="${cat}"]`);
+        if (matchTag) {
+          bar.querySelectorAll('.filter-tag').forEach((t) => t.classList.remove('active'));
+          matchTag.classList.add('active');
+          applyFilter(cat);
+        }
+      }
     });
   }
 
