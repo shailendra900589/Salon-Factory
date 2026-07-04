@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>html,body{background:#0B0B0D;color:#F5F1EA}@media(max-width:768px){.shop-hero-banner,.banner-marquee,.banner-social{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important}.hero-visual{display:none!important}:root{--banner-height:0px}.site-header,.site-header.scrolled{top:0!important}}</style>
+  <style>html,body{background:#0B0B0D;color:#F5F1EA}@media(max-width:768px){.shop-hero-banner,.banner-marquee,.banner-social{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important}.hero-visual{display:none!important}:root{--banner-height:0px;--header-height:56px}.site-header,.site-header.scrolled{top:0!important;background:rgba(11,11,13,.94)!important}.header-inner{padding:0 .9rem;gap:.5rem}.header-actions .btn-primary,.header-actions .header-cta-desktop{display:none!important}.header-actions{gap:.45rem}.cart-trigger,.menu-toggle{width:40px;height:40px;min-width:40px}#contact-hub{position:fixed!important;right:12px!important;left:auto!important;bottom:max(18px,env(safe-area-inset-bottom))!important;width:auto!important;transform:none!important;z-index:99999!important}}</style>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -62,9 +62,9 @@
       </nav>
       <div class="header-actions">
         <button class="cart-trigger" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count">0</span></button>
-        <a href="collections.html" class="btn btn-primary btn-magnetic">Shop Now</a>
+        <a href="collections.html" class="btn btn-primary btn-magnetic header-cta-desktop">Shop Now</a>
+        <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
-      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -132,7 +132,7 @@
     </div>
   </footer>
 
-  <div class="contact-hub" id="contact-hub">
+  <div class="contact-hub" id="contact-hub" style="position:fixed;right:12px;bottom:max(18px,env(safe-area-inset-bottom));left:auto;width:auto;transform:none;z-index:99999">
     <div class="contact-hub-anchor">
     <div class="contact-hub-menu" id="contact-hub-menu" aria-hidden="true">
       <button type="button" class="contact-hub-action contact-hub-action--chat" data-action="chat" aria-label="Open chatbot">
@@ -177,6 +177,7 @@
       <button type="submit" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
     </form>
   </div>
+  <script src="contact-hub.js"></script>
   <script src="products.js" defer></script>
   <script src="script.js" defer></script>
 </body>
